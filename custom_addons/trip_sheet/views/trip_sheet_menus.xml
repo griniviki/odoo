@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <menuitem
+        id="menu_trip_sheet_root"
+        name="Trip Sheets"
+        sequence="30"
+    />
+
+```
+<menuitem
+    id="menu_trip_sheet_records"
+    name="Trip Sheets"
+    parent="menu_trip_sheet_root"
+    action="action_trip_sheet"
+    sequence="10"
+/>
+```
+
+</odoo>
+

@@ -1,0 +1,12 @@
+{
+  "name": "trip-sheet-assets",
+  "private": true,
+  "scripts": {
+    "clean": "rm -rf static/src/js/*",
+    "build": "tsc --project tsconfig.json",
+    "watch": "tsc --project tsconfig.json --watch"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.0"
+  }
+}

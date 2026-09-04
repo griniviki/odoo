@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="0">
+
+    <!-- Ukrainian company -->
+    <record id="company_ua" model="res.company">
+        <field name="name">Ukraine Ltd.</field>
+        <field name="currency_id" ref="base.UAH"/>
+    </record>
+
+    <!-- Paris company -->
+    <record id="company_fr" model="res.company">
+        <field name="name">Paris SARL</field>
+        <field name="currency_id" ref="base.EUR"/>
+    </record>
+
+</odoo>

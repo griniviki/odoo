@@ -1,0 +1,44 @@
+services:
+  web:
+    image: odoo:19.0
+    depends_on:
+      - db
+      - sap-mock
+    ports:
+      - "8069:8069"
+    volumes:
+      # Odoo configuration
+      - ./config:/etc/odoo
+      # Custom addons only (do not overwrite core addons)
+      - ./custom_addons:/mnt/extra-addons
+      - odoo-web-data:/var/lib/odoo
+    environment:
+      HOST: db
+      USER: odoo
+      PASSWORD: 410554
+    
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: 410554
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data/pgdata
+    ports:
+      - "5434:5432"
+
+  sap-mock:
+    image: node:20
+    working_dir: /usr/src/app
+    volumes:
+      - ./sap-mock:/usr/src/app
+    command: sh -c "npm install && node server.js"
+    ports:
+      - "8081:8081"
+
+volumes:
+  odoo-db-data:
+  odoo-web-data:
+

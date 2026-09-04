@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- List view -->
+    <record id="view_trip_sheet_list" model="ir.ui.view">
+        <field name="name">trip.sheet.list</field>
+        <field name="model">trip.sheet</field>
+        <field name="arch" type="xml">
+            <list string="Trip Sheets">
+                <field name="employee_id"/>
+                <field name="month"/>
+                <field name="fuel_start"/>
+                <field name="user_id"/>
+                <field name="create_date"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form view -->
+    <record id="view_trip_sheet_form" model="ir.ui.view">
+        <field name="name">trip.sheet.form</field>
+        <field name="model">trip.sheet</field>
+        <field name="arch" type="xml">
+            <form string="Trip Sheet">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="month" placeholder="YYYY-MM"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group string="General Information">
+                            <field name="employee_id"/>
+                            <field name="month"/>
+                            <field name="user_id"/>
+                        </group>
+
+                        <group string="Fuel Information">
+                            <field name="fuel_start"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Daily Records">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="date_text"/>
+                                    <field name="is_weekend"/>
+                                    <field name="km_before"/>
+                                    <field name="km_after"/>
+                                    <field name="km_diff"/>
+                                    <field name="liters"/>
+                                    <field name="refill"/>
+                                    <field name="fuel_end_day"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Monthly Summary">
+                            <group>
+                                <field name="opening_odometer" readonly="1"/>
+                                <field name="closing_odometer" readonly="1"/>
+                                <field name="total_distance" readonly="1"/>
+                                <field name="total_fuel_used" readonly="1"/>
+                                <field name="total_refill" readonly="1"/>
+                                <field name="fuel_end" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_trip_sheet" model="ir.actions.act_window">
+        <field name="name">Trip Sheets</field>
+        <field name="res_model">trip.sheet</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first trip sheet
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_trip_sheet_root" name="Trip Sheets"/>
+    <menuitem id="menu_trip_sheet" name="Trip Sheets"
+              parent="menu_trip_sheet_root" action="action_trip_sheet"/>
+</odoo>

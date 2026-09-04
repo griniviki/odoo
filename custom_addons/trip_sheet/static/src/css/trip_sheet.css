@@ -1,0 +1,41 @@
+/* Common cell styles */
+input[name="cell"] {
+  width: 80px;
+  padding: 8px;
+  margin: 6px;
+  border: 1px solid #265b66;
+  border-radius: 4px;
+  background-color: #c3e343;
+  font-size: 14px;
+}
+
+/* Editable cells */
+input.cellUser {
+  width: 50px;
+  padding: 1px;
+  margin: 1px;
+  border: 1px solid #265b66;
+  border-radius: 4px;
+  background-color: #f2c0ad;
+  font-size: 14px;
+}
+
+/* Calculated cells */
+input.cellCommon {
+  width: 50px;
+  padding: 1px;
+  margin: 1px;
+  border: 1px solid #265b66;
+  border-radius: 4px;
+  background-color: #c3e343;
+  font-size: 14px;
+}
+
+/* Invalid input cells */
+input.cellError {
+  background-color: #cc0000;
+  border: 1px solid #cc0000;
+  color: #fff;
+  font-weight: bold;
+}
+

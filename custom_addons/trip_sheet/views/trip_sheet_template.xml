@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <template
+        id="trip_sheet_template"
+        name="Trip Sheet Template"
+    >
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section id="fuel_section" class="container py-5">
+                    <form id="kmForm">
+                        <h1 class="trip-sheet-title mb-4">
+                            Маршрутний лист автомобіля
+                        </h1>
+
+                        <div class="trip-sheet-control mb-3">
+                            <label
+                                for="monthPicker"
+                                class="form-label"
+                            >
+                                Month
+                            </label>
+
+                            <input
+                                type="month"
+                                id="monthPicker"
+                                name="month"
+                                class="form-control"
+                                required="required"
+                            />
+                        </div>
+
+                        <div class="trip-sheet-control mb-3">
+                            <label
+                                for="fuelstart"
+                                class="form-label"
+                            >
+                                Fuel left from previous month
+                            </label>
+
+                            <input
+                                class="form-control cellUser"
+                                type="number"
+                                id="fuelstart"
+                                name="fuel_start"
+                                placeholder="Fuel left"
+                                min="0"
+                                step="any"
+                                required="required"
+                            />
+                        </div>
+
+                        <div
+                            id="kmRow"
+                            class="trip-sheet-grid"
+                        ></div>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary mt-3"
+                        >
+                            Save trip sheet
+                        </button>
+                    </form>
+                </section>
+            </div>
+        </t>
+    </template>
+</odoo>
