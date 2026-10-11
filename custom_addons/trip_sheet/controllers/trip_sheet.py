@@ -40,8 +40,45 @@ class TripSheetController(http.Controller):
             }
 
         try:
+            # ---------------------------------------------------------
+            # Find the employee linked to the currently logged-in user.
+            #
+            # Example:
+            # res.users(2) "admin"
+            #       ->
+            # hr.employee(1) "Administrator"
+            # ---------------------------------------------------------
+            employee = request.env["hr.employee"].search(
+                [
+                    ("user_id", "=", request.env.user.id),
+                    (
+                        "company_id",
+                        "=",
+                        request.env.company.id,
+                    ),
+                ],
+                limit=1,
+            )
+
+            if not employee:
+                return {
+                    "success": False,
+                    "message": (
+                        "No employee is linked to the current user "
+                        f"'{request.env.user.name}' for company "
+                        f"'{request.env.company.name}'. "
+                        "Please configure the employee first."
+                    ),
+                }
+
+            # ---------------------------------------------------------
+            # Validate / convert starting fuel.
+            # ---------------------------------------------------------
             fuel_start_value = float(fuel_start or 0)
 
+            # ---------------------------------------------------------
+            # Prepare One2many trip.sheet.line records.
+            # ---------------------------------------------------------
             line_values = []
 
             for record in records:
@@ -57,32 +94,66 @@ class TripSheetController(http.Controller):
                                 record.get("date", "")
                             ),
                             "is_weekend": bool(
-                                record.get("isWeekend", False)
+                                record.get(
+                                    "isWeekend",
+                                    False,
+                                )
                             ),
                             "km_before": float(
-                                record.get("kmBefore", 0) or 0
+                                record.get(
+                                    "kmBefore",
+                                    0,
+                                )
+                                or 0
                             ),
                             "km_after": float(
-                                record.get("kmAfter", 0) or 0
+                                record.get(
+                                    "kmAfter",
+                                    0,
+                                )
+                                or 0
                             ),
                             "km_diff": float(
-                                record.get("kmDiff", 0) or 0
+                                record.get(
+                                    "kmDiff",
+                                    0,
+                                )
+                                or 0
                             ),
                             "liters": float(
-                                record.get("liters", 0) or 0
+                                record.get(
+                                    "liters",
+                                    0,
+                                )
+                                or 0
                             ),
                             "refill": float(
-                                record.get("refill", 0) or 0
+                                record.get(
+                                    "refill",
+                                    0,
+                                )
+                                or 0
                             ),
                             "fuel_end_day": float(
-                                record.get("fuelEndDay", 0) or 0
+                                record.get(
+                                    "fuelEndDay",
+                                    0,
+                                )
+                                or 0
                             ),
                         },
                     )
                 )
 
+            # ---------------------------------------------------------
+            # Create the Trip Sheet.
+            #
+            # employee_id is REQUIRED on trip.sheet, so it must be
+            # explicitly supplied by this website controller.
+            # ---------------------------------------------------------
             trip_sheet = request.env["trip.sheet"].create(
                 {
+                    "employee_id": employee.id,
                     "month": str(month).strip(),
                     "fuel_start": fuel_start_value,
                     "line_ids": line_values,

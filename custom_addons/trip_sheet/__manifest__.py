@@ -11,7 +11,6 @@
         "hr",
         "fleet",
         "account",
-        "l10n_ua_psbo_extension", 
         "hr_employee_extension",
     ],
 
